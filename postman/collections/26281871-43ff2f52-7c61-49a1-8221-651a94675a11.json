@@ -1046,7 +1046,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{lottery_url}}/api/rounds/{{lottery_id}}?date=2026-04-21",
+									"raw": "{{lottery_url}}/api/rounds/{{lottery_id}}",
 									"host": [
 										"{{lottery_url}}"
 									],
@@ -1058,7 +1058,8 @@
 									"query": [
 										{
 											"key": "date",
-											"value": "2026-04-21"
+											"value": "2026-04-21",
+											"disabled": true
 										}
 									]
 								}
