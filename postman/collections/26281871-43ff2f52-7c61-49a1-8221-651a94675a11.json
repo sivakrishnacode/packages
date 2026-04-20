@@ -888,7 +888,7 @@
 								"header": [
 									{
 										"key": "x-actor-type",
-										"value": "DEALER_SERVER",
+										"value": "DEALER_CLIENT",
 										"type": "text"
 									}
 								],
