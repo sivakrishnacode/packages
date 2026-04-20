@@ -1,0 +1,1427 @@
+{
+	"info": {
+		"_postman_id": "26281871-43ff2f52-7c61-49a1-8221-651a94675a11",
+		"name": "D2C Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Server",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Request OTP",
+							"id": "26281871-fcc0c6fe-b223-495d-a32c-eadc556b7cc4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mobile\": \"7810002621\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/auth/request-otp",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"request-otp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify OTP",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7a97f9c1-025e-442f-b806-b8024c60c127",
+										"exec": [
+											"const json = pm.response.json();",
+											"if (json.data && json.data.access_token) {",
+											"    pm.collectionVariables.set(\"access_token\", json.data.access_token);",
+											"}",
+											"if (json.data && json.data.user && json.data.user.id) {",
+											"    pm.collectionVariables.set(\"user_id\", json.data.user.id);",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6a6f103f-d31d-4fe4-ac6c-d24c12abfaff",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "26281871-964caf4a-588c-4a7e-b960-60c3bec9f356",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mobile\": \"7810002621\",\n    \"otpCode\": \"593938\",\n    \"referralCode\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/auth/verify-otp",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"verify-otp"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-fecc1797-9fe8-4c7b-b037-4e77162e432c"
+				},
+				{
+					"name": "User Profile",
+					"item": [
+						{
+							"name": "Get User",
+							"id": "26281871-81dbeec0-cf43-4239-9891-90834c2b6dd8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/user/{{user_id}}",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"id": "26281871-5176727d-14df-4f69-9501-31a07164ecd1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Siva Krishna test1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/user/{{user_id}}",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-947b3f5d-f140-4f46-bbe0-0b58c7d4790a"
+				},
+				{
+					"name": "Wallet",
+					"item": [
+						{
+							"name": "Get Balance",
+							"id": "26281871-c1313351-1793-4c7f-8b29-24e97979cb0f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/wallet/balance",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"wallet",
+										"balance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Transactions",
+							"id": "26281871-88e99268-6da1-4fc7-9544-37623f215022",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/wallet/transactions",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"wallet",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Fund",
+							"id": "26281871-c47c636f-efcb-45cc-af4d-1ba2c4b735e9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 500,\n    \"description\": \"Wallet top-up\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/wallet/add-fund",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"wallet",
+										"add-fund"
+									]
+								},
+								"description": "Add funds to the authenticated user wallet. Credits depositBalance and records a CREDIT/DEPOSIT transaction."
+							},
+							"response": []
+						},
+						{
+							"name": "Withdraw Fund",
+							"id": "26281871-b7c84927-892c-4578-9786-f0871da86f93",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 100,\n    \"description\": \"Withdrawal test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/wallet/withdraw",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"wallet",
+										"withdraw"
+									]
+								},
+								"description": "Submit a withdrawal request. Subject to play-through and daily limit requirements. Creates a PENDING transaction."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Wallet Limits",
+							"id": "26281871-10fa38ae-de65-4f5f-a02b-902e53a13595",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/wallet/limits",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"wallet",
+										"limits"
+									]
+								},
+								"description": "Get user's remaining withdrawal limits, system stage, and play-through progress (percentage and required amount)."
+							},
+							"response": []
+						},
+						{
+							"name": "Internal Purchase (S2S)",
+							"id": "26281871-3f23fac2-7866-4254-8ca8-8afc0f446b96",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": \"{{user_id}}\",\n    \"amount\": 40,\n    \"orderId\": \"2604000001\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/wallet/internal/purchase",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"wallet",
+										"internal",
+										"purchase"
+									]
+								},
+								"description": "Internal endpoint for Lottery Server to deduct funds. Protected by @Public but intended for trusted internal use."
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-89b6cffb-c904-46ff-9b30-85a1942ac230"
+				},
+				{
+					"name": "KYC",
+					"item": [
+						{
+							"name": "Get KYC Status",
+							"id": "26281871-9b705eda-7ffa-4b18-a607-08215755259a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/kyc/status",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"kyc",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify KYC",
+							"id": "26281871-6e267a16-f294-4b96-81a2-85cf85940964",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"aadhaarNumber\": \"1234\",\n    \"verifiedName\": \"Siva Krishna\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/kyc/verify",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"kyc",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-5bdd096d-d2a8-4895-8dda-00cc4ae7669a"
+				},
+				{
+					"name": "Bank Account",
+					"item": [
+						{
+							"name": "Get Bank Details",
+							"id": "26281871-e35d2818-163d-48c2-8b52-c88efca1057e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/bank",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"bank"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Bank Account",
+							"id": "26281871-de1fdd1a-7106-4c3e-b31c-9ea26641a6c7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"accountNumber\": \"1234567890\",\n    \"ifsc\": \"SBIN0001234\",\n    \"bankName\": \"State Bank of India\",\n    \"holderName\": \"Siva Krishna\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{user_url}}/api/bank",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"bank"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Bank Account",
+							"id": "26281871-3cdd853c-d671-46e7-a4e1-5e3cb0b17a07",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{user_url}}/api/bank",
+									"host": [
+										"{{user_url}}"
+									],
+									"path": [
+										"api",
+										"bank"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-4b1a2742-6f23-41fb-a3b7-2816dd227f05"
+				}
+			],
+			"id": "26281871-06b4e2e3-d8b5-4349-8b34-0183f8820cca"
+		},
+		{
+			"name": "Lottery Server",
+			"item": [
+				{
+					"name": "Admin Setup",
+					"item": [
+						{
+							"name": "Create Lottery",
+							"id": "26281871-068fb1ef-f3d2-47c1-a92e-6e81deb7d632",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"drawName\": \"Kerala Lottery\",\n    \"cutoffTime\": 5,\n    \"type\": \"REGULAR\",\n    \"stateName\": \"Kerala\",\n    \"days\": [\"MON\", \"TUE\", \"WED\", \"THU\", \"FRI\", \"SAT\", \"SUN\"],\n    \"drawTimes\": [\n        \"11:30\",\n        \"13:00\"\n    ],\n    \"resultGenerationType\": \"AUTOMATIC\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/admin/lotteries",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"lotteries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Lottery",
+							"id": "26281871-9ecb9f2e-b054-4d45-8073-210f435d088b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"drawName\": \"Kerala Lottery Updated\",\n    \"cutoffTime\": 15,\n    \"drawTimes\": [\n        \"10:00\",\n        \"14:30\",\n        \"18:00\",\n        \"20:00\"\n    ],\n    \"resultGenerationType\": \"MANUAL\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/admin/lotteries/{{lottery_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"lotteries",
+										"{{lottery_id}}"
+									]
+								},
+								"description": "Update lottery details. The drawTimes array takes simple \"HH:MM\" strings. The backend generates and maintains stable tracking IDs automatically."
+							},
+							"response": []
+						},
+						{
+							"name": "Create Game",
+							"id": "26281871-347d8c65-72be-4843-8a08-8276ada64c43",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lotteryId\": \"{{lottery_id}}\",\n    \"name\": \"5 Digit\",\n    \"digits\": 5,\n    \"price\": 50,\n    \"series\": \"YZABC\",\n    \"priceAmount\": 500\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/admin/games",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"games"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Game",
+							"id": "26281871-7fe7af0b-7a12-4482-94fd-af08e43806f1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Single Digit Pro\",\n    \"isActive\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/admin/games/{{game_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"games",
+										"{{game_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-764bf711-bd61-4aac-a834-c6d67366a1d3"
+				},
+				{
+					"name": "Tickets & Orders",
+					"item": [
+						{
+							"name": "Place Order",
+							"id": "26281871-4508688d-9241-401c-a4c9-ab4647e7532e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "USER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestName\": \"Place Order\",\n    \"drawId\": \"{{draw_id}}\",\n    \"userId\": \"{{user_id}}\",\n    \"drawDate\": \"2026-04-20\",\n    \"currency\": \"INR\",\n    \"timestamp\": \"{{$isoTimestamp}}\",\n    \"items\": [\n        {\n            \"gameId\": \"{{game_id}}\",\n            \"tickets\": [\n                { \"label\": \"YZABC=11787\", \"quantity\": 1 },\n                { \"label\": \"YZABC=23413\",\n                    \"quantity\": 1\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/order",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"order"
+									]
+								},
+								"description": "Place a lottery order. Use ONLY drawId (YYYYMMDD + SlotId + Random4). The server now resolves the round automatically from the drawId. drawTime is no longer sent."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Order Details",
+							"id": "26281871-16a43dd2-da1a-4bb2-8b55-50ca7e04fa1d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{lottery_url}}/api/order/{{draw_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"order",
+										"{{draw_id}}"
+									]
+								},
+								"description": "Get details of an order using the drawId."
+							},
+							"response": []
+						},
+						{
+							"name": "My Tickets (Paginated)",
+							"id": "26281871-54195e08-9ad0-4feb-8bd4-64040f8a9e0e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_CLIENT",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{lottery_url}}/api/orders/{{user_id}}?page=1&limit=20",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"{{user_id}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-10dcaa88-821f-4c4c-b19d-60214fc2c586"
+				},
+				{
+					"name": "Public Info",
+					"item": [
+						{
+							"name": "Get Lotteries",
+							"id": "26281871-2d54c313-b6c3-4f71-881f-fbc332e1d5d4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{lottery_url}}/api/lotteries",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"lotteries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Games by Lottery",
+							"id": "26281871-33c736af-8acb-4fc4-8304-05ad4020b01a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{lottery_url}}/api/games?lotteryId={{lottery_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "lotteryId",
+											"value": "{{lottery_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rounds",
+							"id": "26281871-edb858fa-b84a-41df-b2b9-6b74edb07638",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{lottery_url}}/api/rounds/{{lottery_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"rounds",
+										"{{lottery_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-e6441e1c-5926-4fee-8942-efaa132fd5ed"
+				},
+				{
+					"name": "Draw Results",
+					"item": [
+						{
+							"name": "Get Results",
+							"id": "26281871-5cbdcf3d-db4d-4bf8-866f-fd57d49828e8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{lottery_url}}/api/lottery/results",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"lottery",
+										"results"
+									],
+									"query": [
+										{
+											"key": "lotteryId",
+											"value": "{{lottery_id}}",
+											"disabled": true
+										},
+										{
+											"key": "roundId",
+											"value": "{{round_id}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Result",
+							"id": "26281871-dc6085ed-1dc7-427f-9b2b-515f88d7a99f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{lottery_url}}/api/lottery/results/{{result_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"lottery",
+										"results",
+										"{{result_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Result Status",
+							"id": "26281871-3292abb8-a01c-4c6e-a727-e45e591bbbcb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"APPROVED\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/lottery/results/{{result_id}}/status",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"lottery",
+										"results",
+										"{{result_id}}",
+										"status"
+									]
+								},
+								"description": "Approve a result to trigger winner payouts. Status can be PENDING or APPROVED."
+							},
+							"response": [
+								{
+									"id": "26281871-99dc1279-a4c0-4819-b6e5-36640d00d40a",
+									"name": "Update Result Status",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "x-actor-type",
+												"value": "DEALER_SERVER",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status\": \"APPROVED\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{lottery_url}}/api/lottery/results/{{result_id}}/status",
+											"host": [
+												"{{lottery_url}}"
+											],
+											"path": [
+												"api",
+												"lottery",
+												"results",
+												"{{result_id}}",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1783"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"6f7-NkPFEqco0Q7k2zD2qE5OO21tAcA\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 20 Apr 2026 06:06:58 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n    \"success\": true,\n    \"statusCode\": 200,\n    \"data\": {\n        \"id\": \"cmo6sj0xp005mlx01h0fy4yft\",\n        \"lotteryId\": \"cmo6rf84l0011lx01m97f68fn\",\n        \"roundId\": \"cmo6rgfyj0013lx01tiw3iahi\",\n        \"drawTime\": \"11:30\",\n        \"seriesType\": \"YZABC\",\n        \"status\": \"APPROVED\",\n        \"joinedResult\": \"01399\",\n        \"resultDigits\": {\n            \"A\": \"3\",\n            \"B\": \"9\",\n            \"C\": \"9\",\n            \"Y\": \"0\",\n            \"Z\": \"1\"\n        },\n        \"letterResults\": {\n            \"A\": {\n                \"digit\": \"3\",\n                \"strategy\": \"zero-coverage\",\n                \"frequency\": 0\n            },\n            \"B\": {\n                \"digit\": \"9\",\n                \"strategy\": \"zero-coverage\",\n                \"frequency\": 0\n            },\n            \"C\": {\n                \"digit\": \"9\",\n                \"strategy\": \"zero-coverage\",\n                \"frequency\": 0\n            },\n            \"Y\": {\n                \"digit\": \"0\",\n                \"strategy\": \"zero-coverage\",\n                \"frequency\": 0\n            },\n            \"Z\": {\n                \"digit\": \"1\",\n                \"strategy\": \"minimum-coverage\",\n                \"frequency\": 1\n            }\n        },\n        \"totalTickets\": 6,\n        \"totalWinners\": 0,\n        \"gameWinners\": {\n            \"cmo6rkx5t001jlx01edyo74ya\": 0,\n            \"cmo6rl6df001llx01vhe4k6lw\": 0,\n            \"cmo6rlfin001nlx01kqlnanqx\": 0,\n            \"cmo6rlq8s001tlx01e7hzpi04\": 0,\n            \"cmo6rlysw001vlx0166e4300a\": 0\n        },\n        \"strategy\": \"minimum-coverage\",\n        \"publishedAt\": \"2026-04-20T06:05:00.156Z\",\n        \"result\": {\n            \"games\": [\n                {\n                    \"gameId\": \"cmo6rkx5t001jlx01edyo74ya\",\n                    \"tickets\": 2,\n                    \"winners\": 0,\n                    \"gameName\": \"Single Digit\"\n                },\n                {\n                    \"gameId\": \"cmo6rl6df001llx01vhe4k6lw\",\n                    \"tickets\": 0,\n                    \"winners\": 0,\n                    \"gameName\": \"Double Digit\"\n                },\n                {\n                    \"gameId\": \"cmo6rlfin001nlx01kqlnanqx\",\n                    \"tickets\": 2,\n                    \"winners\": 0,\n                    \"gameName\": \"Three Digit\"\n                },\n                {\n                    \"gameId\": \"cmo6rlq8s001tlx01e7hzpi04\",\n                    \"tickets\": 0,\n                    \"winners\": 0,\n                    \"gameName\": \"4 Digit\"\n                },\n                {\n                    \"gameId\": \"cmo6rlysw001vlx0166e4300a\",\n                    \"tickets\": 2,\n                    \"winners\": 0,\n                    \"gameName\": \"5 Digit\"\n                }\n            ],\n            \"roundId\": \"cmo6rgfyj0013lx01tiw3iahi\",\n            \"drawName\": \"Kerala Lottery\",\n            \"drawTime\": \"11:30\",\n            \"strategy\": \"minimum-coverage\",\n            \"lotteryId\": \"cmo6rf84l0011lx01m97f68fn\",\n            \"seriesType\": \"YZABC\",\n            \"publishedAt\": \"2026-04-20T06:05:00.156Z\",\n            \"joinedResult\": \"01399\",\n            \"resultDigits\": {\n                \"A\": \"3\",\n                \"B\": \"9\",\n                \"C\": \"9\",\n                \"Y\": \"0\",\n                \"Z\": \"1\"\n            },\n            \"totalTickets\": 6,\n            \"totalWinners\": 0\n        },\n        \"createdAt\": \"2026-04-20T06:05:00.157Z\",\n        \"updatedAt\": \"2026-04-20T06:06:58.596Z\"\n    },\n    \"timestamp\": \"2026-04-20T06:06:58.616Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Manual Result Stats",
+							"id": "26281871-d313f2d4-d7c1-47d5-87c9-6f7342ced695",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{lottery_url}}/api/lottery/results/manual-stats/{{round_id}}?number=12345",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"lottery",
+										"results",
+										"manual-stats",
+										"{{round_id}}"
+									],
+									"query": [
+										{
+											"key": "number",
+											"value": "12345"
+										}
+									]
+								},
+								"description": "Calculate potential winners and stats for a manual result number without publishing it."
+							},
+							"response": []
+						},
+						{
+							"name": "Manual Result Publish",
+							"id": "26281871-f144221a-8ac1-492e-b817-79b581e7da34",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{external_service_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"number\": \"12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lottery_url}}/api/lottery/results/manual-publish/{{round_id}}",
+									"host": [
+										"{{lottery_url}}"
+									],
+									"path": [
+										"api",
+										"lottery",
+										"results",
+										"manual-publish",
+										"{{round_id}}"
+									]
+								},
+								"description": "Publish a manual result with the chosen 5-digit number."
+							},
+							"response": []
+						}
+					],
+					"id": "26281871-9b2eea65-700c-4638-93b3-dcfc2f62e833"
+				}
+			],
+			"id": "26281871-475b7828-f595-4890-bcde-58a3cccd8cfe"
+		}
+	],
+	"variable": [
+		{
+			"key": "user_url",
+			"value": "http://187.127.131.80:3001"
+		},
+		{
+			"key": "lottery_url",
+			"value": "http://187.127.131.80:3000"
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "lottery_id",
+			"value": ""
+		},
+		{
+			"key": "game_id",
+			"value": ""
+		},
+		{
+			"key": "draw_id",
+			"value": ""
+		},
+		{
+			"key": "round_id",
+			"value": ""
+		},
+		{
+			"key": "result_id",
+			"value": ""
+		},
+		{
+			"key": "external_service_token",
+			"value": ""
+		}
+	]
+}
