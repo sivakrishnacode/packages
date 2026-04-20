@@ -885,7 +885,13 @@
 									]
 								},
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "x-actor-type",
+										"value": "DEALER_SERVER",
+										"type": "text"
+									}
+								],
 								"url": {
 									"raw": "{{lottery_url}}/api/order/{{draw_id}}",
 									"host": [
