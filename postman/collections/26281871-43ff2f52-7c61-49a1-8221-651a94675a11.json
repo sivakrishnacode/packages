@@ -846,7 +846,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"requestName\": \"Place Order\",\n    \"drawId\": \"{{draw_id}}\",\n    \"userId\": \"{{user_id}}\",\n    \"drawDate\": \"2026-04-20\",\n    \"currency\": \"INR\",\n    \"timestamp\": \"{{$isoTimestamp}}\",\n    \"items\": [\n        {\n            \"gameId\": \"{{game_id}}\",\n            \"tickets\": [\n                { \"label\": \"YZABC=11787\", \"quantity\": 1 },\n                { \"label\": \"YZABC=23413\",\n                    \"quantity\": 1\n                }\n            ]\n        }\n    ]\n}",
+									"raw": "{\n    \"requestName\": \"Place Order\",\n    \"drawId\": \"{{draw_id}}\",\n    \"userId\": \"{{user_id}}\",\n    \"drawDate\": \"2026-04-20\",\n    \"currency\": \"INR\",\n    \"timestamp\": \"{{$isoTimestamp}}\",\n    \"items\": [\n        {\n            \"gameId\": \"{{game_id}}\",\n            \"tickets\": [\n                { \"label\": \"A=2\", \"quantity\": 1 },\n                { \"label\": \"B=2\",\n                    \"quantity\": 1\n                }\n            ]\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
