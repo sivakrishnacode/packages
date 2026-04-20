@@ -1046,7 +1046,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{lottery_url}}/api/rounds/{{lottery_id}}",
+									"raw": "{{lottery_url}}/api/rounds/{{lottery_id}}?date=2026-04-21",
 									"host": [
 										"{{lottery_url}}"
 									],
@@ -1054,6 +1054,12 @@
 										"api",
 										"rounds",
 										"{{lottery_id}}"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2026-04-21"
+										}
 									]
 								}
 							},
